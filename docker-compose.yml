@@ -4,8 +4,8 @@ database:
     - "5405:5432"
   environment:
     POSTGRES_PASSWORD: insecure
-    POSTGRES_USER: postgres
     POSTGRES_DB: metadata
+    POSTGRES_USER: metadata
 
 web:
   build: ./web
@@ -17,4 +17,5 @@ web:
     - $PWD/reports:/app/reports
   environment:
     SECRET_KEY: hoi
+    DB_NAME: metadata
     DB_PASSWORD: insecure
