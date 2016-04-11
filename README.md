@@ -20,5 +20,7 @@ or
 
 	docker-compose up
 
-The API should now be available on http://localhost:8000/
+The API should now be available on http://localhost:8101/
+
+The Database should now be available on 127.0.0.1:5405
 
