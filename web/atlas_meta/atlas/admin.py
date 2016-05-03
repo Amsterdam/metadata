@@ -4,9 +4,10 @@ from .models import MetaData
 
 
 class MetaDataAdmin(admin.ModelAdmin):
-    exclude = ('',)
+    list_display = ['id', 'title', 'group', 'update_frequency', 'data_modified_date', 'last_import_date']
+
     def get_queryset(self, request):
-        return MetaData.objects.all().exclude(title=u'')
+        return MetaData.objects.exclude(title__isnull=True)
 
 
 admin.site.register(MetaData, MetaDataAdmin)

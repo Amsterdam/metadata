@@ -30,9 +30,9 @@ INSTALLED_APPS = (
     'django_extensions',
 
     'corsheaders',
+    'rest_framework',
 
     'atlas',
-    'rest_framework',
 )
 
 if DEBUG:

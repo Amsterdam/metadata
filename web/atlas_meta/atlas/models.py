@@ -20,4 +20,4 @@ class MetaData(models.Model):
         if self.group:
             return '{} - {}'.format(self.group, self.title)
 
-        return self.title
+        return self.title or '<empty>'
