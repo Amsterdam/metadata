@@ -45,7 +45,7 @@ class TestMetaData(APITestCase):
             id='hoi'
         )
 
-        num_models = MetaData.objects.count()
+        num_models = MetaData.objects.exclude(title__isnull=True).count()
 
         response = self.client.get('/metadata/')
         self.assertEqual(response.status_code, 200)
