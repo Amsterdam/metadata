@@ -41,7 +41,7 @@ stage('Test') {
 
     stage("Build develop image") {
         tryStep "build", {
-            def image = docker.build("admin.datapunt.amsterdam.nl:5000/atlas/metadata:${env.BUILD_NUMBER}", "web")
+            def image = docker.build("build.datapunt.amsterdam.nl:5000/atlas/metadata:${env.BUILD_NUMBER}", "web")
             image.push()
             image.push("acceptance")
         }
@@ -71,7 +71,7 @@ stage('Waiting for approval') {
 node {
     stage('Push production image') {
     tryStep "image tagging", {
-        def image = docker.image("admin.datapunt.amsterdam.nl:5000/atlas/metadata:${env.BUILD_NUMBER}")
+        def image = docker.image("build.datapunt.amsterdam.nl:5000/atlas/metadata:${env.BUILD_NUMBER}")
         image.pull()
 
             image.push("production")
