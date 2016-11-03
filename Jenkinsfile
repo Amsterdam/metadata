@@ -31,11 +31,12 @@ node {
 
 stage('Test') {
     tryStep "test", {
-            sh "docker-compose run --rm -u root web python manage.py test"
-        }, {
-            sh "docker-compose down"
-        }
+        sh "docker-compose -p metadata -f .jenkins/docker-compose.yml build"
+        sh "docker-compose -p metadata -f .jenkins/docker-compose.yml run -u root --rm tests"
+    }, {
+        sh "docker-compose -p metadata -f .jenkins/docker-compose.yml down"
     }
+}
 
     stage("Build develop image") {
         tryStep "build", {
