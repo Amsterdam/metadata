@@ -6,9 +6,10 @@ from datapunt_generic.generic.database import get_docker_host
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.getenv("SECRET_KEY", "default-secret")
+insecure_secret = "default-secret"
+SECRET_KEY = os.getenv("SECRET_KEY", insecure_secret)
 
-DEBUG = False
+DEBUG = SECRET_KEY == insecure_secret
 
 TESTING = sys.argv[1:2] == ['test']
 
