@@ -17,7 +17,8 @@ class TestMetaData(APITestCase):
             'id': 'hoi',
         }
 
-        response = self.client.put('/metadata/{}/'.format(data['id']), data, format='json')
+        response = self.client.put(
+            '/metadata/{}/'.format(data['id']), data, format='json')
         self.assertEqual(response.status_code, 404)
 
     def test_update_shouldnt_update_fields(self):

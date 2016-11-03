@@ -116,7 +116,7 @@ LOGGING = {
             'class': 'logging.StreamHandler',
         },
         'slackbot': {
-            'level': 'INFO',
+            'level': 'ERROR',
             'class': 'pyslack.SlackHandler',
             'formatter': 'slack',
             'token': os.getenv('SLACK_TOKEN', 'insecure'),
