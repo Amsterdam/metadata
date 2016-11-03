@@ -111,10 +111,23 @@ LOGGING = {
             'format': '%(message)s',
         },
     },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
+    'loggers': {
+        'django': {
+            'handlers': ['console'] if DEBUG else ['console', 'slack'],
+            'level': 'INFO',
+        }
+    }
+}
+
+BASE_HANDLERS = {
+    'console': {
+        'class': 'logging.StreamHandler',
+    }
+}
+
+# Only slack when running in 'prod' mode
+if not DEBUG:
+    BASE_HANDLERS.update({
         'slackbot': {
             'level': 'ERROR',
             'class': 'pyslack.SlackHandler',
@@ -122,15 +135,10 @@ LOGGING = {
             'token': os.getenv('SLACK_TOKEN', 'insecure'),
             'username': 'atlas milieuthemas',
             'channel': '#devops',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console', 'slackbot'],
-            'level': 'INFO',
-        },
-    },
-}
+        }
+    })
+
+LOGGING.update({'handlers': BASE_HANDLERS})
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login'
