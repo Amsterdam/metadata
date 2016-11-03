@@ -11,7 +11,6 @@ SECRET_KEY = os.getenv("SECRET_KEY", "default-secret")
 DEBUG = False
 
 TESTING = sys.argv[1:2] == ['test']
-JENKINS = 'jenkins' in sys.argv
 
 ALLOWED_HOSTS = ['*']
 
@@ -26,7 +25,6 @@ INSTALLED_APPS = (
 
     'django.contrib.staticfiles',
 
-    'django_jenkins',
     'django_extensions',
 
     'corsheaders',

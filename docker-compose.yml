@@ -13,9 +13,6 @@ web:
     - "8101:8000"
   links:
     - database:database
-  volumes:
-    - $PWD/reports:/app/reports
   environment:
-    SECRET_KEY: hoi
     DB_NAME: metadata
     DB_PASSWORD: insecure
