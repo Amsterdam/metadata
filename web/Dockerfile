@@ -6,7 +6,7 @@ ENV PYTHONUNBUFFERED 1
 EXPOSE 8000
 
 RUN apt-get update \
-    && apt-get install -y
+    && apt-get install -y \
         netcat \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
