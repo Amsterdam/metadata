@@ -73,7 +73,7 @@ WSGI_APPLICATION = 'atlas_meta.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.getenv('DB_NAME', 'metadata'),
         'USER': os.getenv('DB_NAME', 'metadata'),
         'PASSWORD': os.getenv('DB_PASSWORD', 'insecure'),
