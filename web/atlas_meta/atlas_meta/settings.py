@@ -103,34 +103,42 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'static'))
 
+HANDLERS = {
+    'console': {
+        'class': 'logging.StreamHandler',
+    }
+}
+
+# Only slack when running in 'prod' mode
+if not DEBUG:
+    HANDLERS.update({
+        'slack_handler': {
+            'level': 'ERROR',
+            'class': 'pyslack.SlackHandler',
+            'formatter': 'slack_formatter',
+            'token': os.getenv('SLACK_TOKEN', 'insecure'),
+            'username': 'atlas metadata',
+            'channel': '#devops',
+        }
+    })
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'slack': {
+        'slack_formatter': {
             'format': '%(message)s',
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-        'slackbot': {
-            'level': 'ERROR',
-            'class': 'pyslack.SlackHandler',
-            'formatter': 'slack',
-            'token': os.getenv('SLACK_TOKEN', 'insecure'),
-            'username': 'atlas milieuthemas',
-            'channel': '#devops',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'slackbot'],
+            'handlers': ['console'] if DEBUG else ['console', 'slack_handler'],
             'level': 'INFO',
-        },
-    },
+        }
+    }
 }
+
+LOGGING.update({'handlers': HANDLERS})
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login'
