@@ -6,3 +6,6 @@ reports
 *_dev_settings.py
 static
 .env
+
+.project
+.pydevproject
