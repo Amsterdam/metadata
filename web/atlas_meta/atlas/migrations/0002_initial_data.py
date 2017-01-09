@@ -85,18 +85,11 @@ data = [
         'data_modified_date': '1988 - 2015',
     },
     {
-        'id': 'nap',
-        'title': 'NAP',
-        'group': 'NAP',
-        'update_frequency': 'jaarlijks',
-        'data_modified_date': 'jaarlijks',
-    },
-    {
-        'id': 'meetbouten',
+        'id': 'nap-meetbouten',
         'title': 'Meetbouten',
-        'group': 'Meetbouten',
-        'update_frequency': 'jaarlijks',
-        'data_modified_date': 'jaarlijks',
+        'group': 'NAP',
+        'update_frequency': 'op verzoek',
+        'data_modified_date': 'op verzoek',
     },
     {
         'id': 'panoramabeelden',
