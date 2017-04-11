@@ -157,6 +157,6 @@ HEALTH_MODEL = 'atlas.metadata'
 
 CORS_ORIGIN_REGEX_WHITELIST = (
     '^(https?://)?localhost(:\d+)?$',
-    '^(https?://)?.*\.datapunt.amsterdam\.nl$',
+    '^(https?://)?.*\.data.amsterdam\.nl$',
     '^(https?://)?.*\.amsterdam\.nl$',
 )
