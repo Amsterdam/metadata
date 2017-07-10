@@ -3,6 +3,12 @@ import os
 import sys
 
 from datapunt_generic.generic.database import get_docker_host
+from settings_databases import LocationKey, \
+    get_docker_host, \
+    get_database_key, \
+    OVERRIDE_HOST_ENV_VAR, \
+    OVERRIDE_PORT_ENV_VAR
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -73,15 +79,35 @@ WSGI_APPLICATION = 'atlas_meta.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+DATABASE_OPTIONS = {
+    LocationKey.docker: {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': os.getenv('DATABASE_NAME', 'metadata'),
+        'USER': os.getenv('DATABASE_USER', 'metadata'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'insecure'),
+        'HOST': 'database',
+        'PORT': '5432'
+    },
+    LocationKey.local: {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': os.getenv('DATABASE_NAME', 'metadata'),
+        'USER': os.getenv('DATABASE_USER', 'metadata'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'insecure'),
+        'HOST': get_docker_host(),
+        'PORT': '5412'
+    },
+    LocationKey.override: {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': os.getenv('DATABASE_NAME', 'metadata'),
+        'USER': os.getenv('DATABASE_USER', 'metadata'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'insecure'),
+        'HOST': os.getenv(OVERRIDE_HOST_ENV_VAR),
+        'PORT': os.getenv(OVERRIDE_PORT_ENV_VAR, '5432')
+    },
+}
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('DB_NAME', 'metadata'),
-        'USER': os.getenv('DB_NAME', 'metadata'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'insecure'),
-        'HOST': os.getenv('DATABASE_PORT_5432_TCP_ADDR', get_docker_host()),
-        'PORT': os.getenv('DATABASE_PORT_5432_TCP_PORT', '5405'),
-    }
+    'default': DATABASE_OPTIONS[get_database_key()]
 }
 
 # Internationalization
