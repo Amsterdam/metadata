@@ -76,9 +76,9 @@ WSGI_APPLICATION = 'atlas_meta.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('DB_NAME', 'metadata'),
-        'USER': os.getenv('DB_NAME', 'metadata'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'insecure'),
+        'NAME': os.getenv('DATABASE_NAME', 'metadata'),
+        'USER': os.getenv('DATABASE_NAME', 'metadata'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'insecure'),
         'HOST': os.getenv('DATABASE_PORT_5432_TCP_ADDR', get_docker_host()),
         'PORT': os.getenv('DATABASE_PORT_5432_TCP_PORT', '5405'),
     }
