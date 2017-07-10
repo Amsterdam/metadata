@@ -4,9 +4,8 @@ set -u
 set -e
 
 # wait for postgres
-echo "Waiting for postgres."
-while ! nc -z ${DATABASE_PORT_5432_TCP_ADDR} ${DATABASE_PORT_5432_TCP_PORT}
+while ! nc -z database 5432
 do
-	echo "Still waiting for postgres..."
-	sleep 0.1
+	echo "Waiting for postgres..."
+	sleep 2
 done
