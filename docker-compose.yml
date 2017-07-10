@@ -14,7 +14,7 @@ services:
     ports:
       - "8101:8000"
     links:
-      - database:database
+      - database
     environment:
       DATABASE_NAME: metadata
       DATABASE_PASSWORD: insecure

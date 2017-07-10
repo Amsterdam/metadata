@@ -3,10 +3,10 @@ import os
 import sys
 
 from datapunt_generic.generic.database import get_docker_host
-from atlas_meta.settings_databases import LocationKey, \
-    get_docker_host, \
-    get_database_key, \
-    OVERRIDE_HOST_ENV_VAR, \
+from atlas_meta.settings_databases import LocationKey,\
+    get_docker_host,\
+    get_database_key,\
+    OVERRIDE_HOST_ENV_VAR,\
     OVERRIDE_PORT_ENV_VAR
 
 

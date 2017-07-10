@@ -5,7 +5,7 @@ services:
     ports:
       - "5434:5432"
     links:
-      - database:database
+      - database
     environment:
       DATABASE_NAME: metadata
       DATABASE_PASSWORD: insecure
