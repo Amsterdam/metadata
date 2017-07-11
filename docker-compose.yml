@@ -17,6 +17,7 @@ services:
       - database
     environment:
       DATABASE_NAME: metadata
+      DATABASE_USER: metadata
       DATABASE_PASSWORD: insecure
       UWSGI_HTTP: ":8000"
       UWSGI_MODULE: "atlas_meta.wsgi:application"

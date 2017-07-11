@@ -8,6 +8,7 @@ services:
       - database
     environment:
       DATABASE_NAME: metadata
+      DATABASE_USER: metadata
       DATABASE_PASSWORD: insecure
       METADATA_URL: ""
     command: bash -c "/app/docker-wait.sh && python manage.py test"
