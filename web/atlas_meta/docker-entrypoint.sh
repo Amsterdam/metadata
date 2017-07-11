@@ -5,8 +5,6 @@ set -e
 
 cd /app
 
-source docker-wait.sh
-
 # migrate database tables
 yes yes | python manage.py migrate --noinput
 
