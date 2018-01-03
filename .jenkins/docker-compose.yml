@@ -14,7 +14,7 @@ services:
     command: bash -c "/app/docker-wait.sh && python manage.py test"
 
   database:
-    image: build.datapunt.amsterdam.nl:5000/atlas/postgres
+    image: amsterdam/postgres
     environment:
       POSTGRES_PASSWORD: insecure
       POSTGRES_DB: metadata
