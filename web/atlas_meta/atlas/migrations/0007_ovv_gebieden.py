@@ -5,7 +5,7 @@ NEW_DATA = (
     {
         'id': 'gebieden-ovv',
         'title': 'Overlastgebieden',
-        'group': 'Gebieden',
+        'group': '680',
         'update_frequency': 'op verzoek',
         'data_modified_date': 'augustus 2018',
     },
