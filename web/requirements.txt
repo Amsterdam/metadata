@@ -17,9 +17,9 @@ psycopg2==2.6.2
 pyslack-real==0.6.0
 python-dateutil==2.5.3
 pytz==2016.7
-requests==2.11.1
+requests==2.20.0
 six==1.10.0
 sphinx-me==0.3
 sqlparse==0.2.2
 tqdm==4.9.0
-urllib3==1.18.1
+urllib3==1.23
