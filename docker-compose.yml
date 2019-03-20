@@ -21,3 +21,5 @@ services:
       DATABASE_PASSWORD: insecure
       UWSGI_HTTP: ":8000"
       UWSGI_MODULE: "atlas_meta.wsgi:application"
+      UWSGI_STATIC_MAP: /static=/static
+      UWSGI_STATIC_SAFE: static/
