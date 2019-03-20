@@ -21,8 +21,8 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 
-RUN ./manage.py collectstatic
-
 USER datapunt
 COPY atlas_meta /app/
+
+RUN ./manage.py collectstatic
 CMD /app/docker-entrypoint.sh
