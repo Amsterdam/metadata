@@ -7,9 +7,6 @@ services:
     links:
       - database
     environment:
-      http_proxy:
-      https_proxy:
-      no_proxy:
       DATABASE_NAME: metadata
       DATABASE_USER: metadata
       DATABASE_PASSWORD: insecure
