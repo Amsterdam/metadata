@@ -1,4 +1,4 @@
-Django==1.11.23
+Django==1.11.27
 Markdown==3.0.1
 coverage==4.5.2
 django-braces==1.13.0
