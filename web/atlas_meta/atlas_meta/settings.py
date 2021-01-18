@@ -61,7 +61,7 @@ ROOT_URLCONF = 'atlas_meta.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'atlas/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
