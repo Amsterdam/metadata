@@ -12,7 +12,7 @@ class AtlasRouter(routers.DefaultRouter):
 
 
 router = AtlasRouter()
-router.register(r'metadata', views.MetaDataViewset, base_name='metadata')
+router.register(r'metadata', views.MetaDataViewset)
 
 urlpatterns = router.urls
 
