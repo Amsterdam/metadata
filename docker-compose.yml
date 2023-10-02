@@ -1,4 +1,3 @@
-version: '3.0'
 services:
   database:
     image: amsterdam/postgres11
@@ -13,8 +12,6 @@ services:
     build: ./web
     ports:
       - "8101:8000"
-    links:
-      - database
     environment:
       DATABASE_NAME: metadata
       DATABASE_USER: metadata

@@ -1,12 +1,13 @@
-FROM amsterdam/python
+FROM python:3.7-bookworm
 MAINTAINER datapunt@amsterdam.nl
 
 ENV PYTHONUNBUFFERED 1
 
 EXPOSE 8000
 
-RUN apt-get install -y \
-        netcat \
+RUN apt-get update && apt-get install -y \
+	gdal-bin \
+	libpcre3 libpcre3-dev \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
 	&& adduser --system datapunt \
