@@ -6,6 +6,7 @@ ENV PYTHONUNBUFFERED 1
 EXPOSE 8000
 
 RUN apt-get update && apt-get install -y \
+	netcat-openbsd \
 	gdal-bin \
 	libpcre3 libpcre3-dev \
 	&& apt-get clean \
