@@ -1,6 +1,6 @@
 services:
   database:
-    image: amsterdam/postgres11
+    image: postgres:16.3
     ports:
       - "5405:5432"
     environment:
@@ -10,9 +10,11 @@ services:
 
   web:
     build: ./web
-    ports:
-      - "8101:8000"
+    volumes:
+      - ./web/atlas_meta:/app
+      - staticfiles:/static
     environment:
+      DATABASE_HOST_OVERRIDE: database
       DATABASE_NAME: metadata
       DATABASE_USER: metadata
       DATABASE_PASSWORD: insecure
@@ -20,3 +22,16 @@ services:
       UWSGI_MODULE: "atlas_meta.wsgi:application"
       UWSGI_STATIC_MAP: /static=/static
       UWSGI_STATIC_SAFE: static/
+
+  proxy:
+    image: nginx:alpine
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./web/nginx.conf:/etc/nginx/nginx.conf
+      - staticfiles:/static
+    depends_on:
+      - web
+
+volumes:
+  staticfiles:
