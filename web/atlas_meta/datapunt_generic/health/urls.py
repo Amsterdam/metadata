@@ -1,10 +1,10 @@
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 app_name = 'datapunt-health'
 
 urlpatterns = [
-    url(r'^health$', views.health),
-    url(r'^data$', views.check_data),
+    re_path(r'^health$', views.health),
+    re_path(r'^data$', views.check_data),
 ]

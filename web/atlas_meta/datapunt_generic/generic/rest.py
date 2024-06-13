@@ -32,7 +32,7 @@ class LinksField(serializers.HyperlinkedIdentityField):
 
         result = OrderedDict([
             ('self', dict(
-                href=self.get_url(value, self.view_name, request, None))
+                href=self.get_re_path(value, self.view_name, request, None))
              ),
         ])
 
