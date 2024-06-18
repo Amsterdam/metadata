@@ -2,12 +2,17 @@ FROM python:3.12-bookworm
 LABEL maintainer="datapunt@amsterdam.nl"
 
 ENV PYTHONUNBUFFERED 1
-ENV POETRY_VIRTUALENVS_CREATE=false
+ENV POETRY_VIRTUALENVS_IN_PROJECT=true
 ENV PATH=/root/.local/bin:$PATH
+ENV PATH=/app/.venv/bin:$PATH
+
+WORKDIR /app
 
 EXPOSE 8000
 
 RUN apt-get update && apt-get install -y \
+	build-essential \
+	python3-dev \
 	netcat-openbsd \
 	gdal-bin \
 	libpcre3 libpcre3-dev pipx\
@@ -17,11 +22,11 @@ RUN apt-get update && apt-get install -y \
 	&& mkdir -p /static \
 	&& chown datapunt /static
 
-RUN pipx install poetry==1.3.2
-# USER datapunt
+RUN pipx install poetry==1.8
 
-WORKDIR /app
 COPY atlas_meta /app
-RUN poetry install --no-root --no-dev
 
-CMD ["poetry", "run", "gunicorn", "atlas_meta.wsgi:application", "--bind", "0.0.0.0:8000"]
+RUN poetry install
+RUN python manage.py collectstatic --noinput
+
+CMD ["uwsgi", "uwsgi.ini"]

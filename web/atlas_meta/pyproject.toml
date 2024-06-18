@@ -1,4 +1,5 @@
 [tool.poetry]
+package-mode = false
 name = "metadata"
 version = "0.1.0"
 description = "Project to store metadata for dataset imports. It has API endpoints to update this metadata from other projects, and an enpoint to fetch a html template that contains the stored data."
@@ -31,8 +32,9 @@ sphinx-me = "^0.3"
 sqlparse = "^0.5.0"
 tqdm = "^4.66.4"
 urllib3 = "^2.2.1"
-gunicorn = "^22.0.0"
 django-debug-toolbar = "^4.4.2"
+whitenoise = "^6.6.0"
+uwsgi = "^2.0.26"
 
 
 [build-system]
