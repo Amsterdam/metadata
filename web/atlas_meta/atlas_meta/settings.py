@@ -1,6 +1,8 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import sys
+from pathlib import Path
+
 
 from datapunt_generic.generic.database import get_docker_host
 from atlas_meta.settings_databases import LocationKey,\
@@ -10,7 +12,7 @@ from atlas_meta.settings_databases import LocationKey,\
     OVERRIDE_PORT_ENV_VAR
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 insecure_secret = "default-secret"
 SECRET_KEY = os.getenv("SECRET_KEY", insecure_secret)
@@ -52,6 +54,7 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
@@ -126,7 +129,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'static'))
+STATIC_ROOT = BASE_DIR / 'static'
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 
 HANDLERS = {
     'console': {
