@@ -37,6 +37,10 @@ whitenoise = "^6.6.0"
 uwsgi = "^2.0.26"
 
 
+[tool.poetry.group.dev.dependencies]
+django-upgrade = "^1.18.0"
+black = "^24.4.2"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
