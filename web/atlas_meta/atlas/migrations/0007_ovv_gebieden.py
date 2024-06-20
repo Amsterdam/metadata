@@ -3,21 +3,21 @@ from django.core.exceptions import ObjectDoesNotExist
 
 NEW_DATA = (
     {
-        'id': 'gebieden-ovv',
-        'title': 'Overlastgebieden',
-        'group': '680',
-        'update_frequency': 'op verzoek',
-        'data_modified_date': 'augustus 2018',
+        "id": "gebieden-ovv",
+        "title": "Overlastgebieden",
+        "group": "680",
+        "update_frequency": "op verzoek",
+        "data_modified_date": "augustus 2018",
     },
 )
 
 
 def update_ovv_gebieden(apps, schema_editor):
-    Migrations = apps.get_model('atlas', 'metadata')
+    Migrations = apps.get_model("atlas", "metadata")
 
     # Delete gebieden_ovv, if it exists
     try:
-        gebieden_ovv = Migrations.objects.get(pk='gebieden-ovv')
+        gebieden_ovv = Migrations.objects.get(pk="gebieden-ovv")
     except ObjectDoesNotExist:
         pass  # this row doesn't exist
     else:
@@ -34,7 +34,7 @@ def update_ovv_gebieden(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('atlas', '0006_nap_meetbouten'),
+        ("atlas", "0006_nap_meetbouten"),
     ]
 
     operations = [

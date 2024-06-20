@@ -1,6 +1,14 @@
 from collections import OrderedDict
 
-from rest_framework import renderers, serializers, pagination, response, viewsets, filters, reverse
+from rest_framework import (
+    renderers,
+    serializers,
+    pagination,
+    response,
+    viewsets,
+    filters,
+    reverse,
+)
 from rest_framework.reverse import reverse
 from rest_framework.utils.urls import replace_query_param
 from rest_framework_extensions.mixins import DetailSerializerMixin
@@ -10,11 +18,9 @@ FORMATS = [dict(format=r.format, type=r.media_type) for r in DEFAULT_RENDERERS]
 
 
 def get_links(view_name, kwargs=None, request=None):
-    result = OrderedDict([
-        ('self', dict(
-            href=reverse(view_name, kwargs=kwargs, request=request)
-        ))
-    ])
+    result = OrderedDict(
+        [("self", dict(href=reverse(view_name, kwargs=kwargs, request=request)))]
+    )
 
     return result
 
@@ -22,30 +28,33 @@ def get_links(view_name, kwargs=None, request=None):
 class DataSetSerializerMixin(object):
     def to_representation(self, obj):
         result = super().to_representation(obj)
-        result['dataset'] = self.dataset
+        result["dataset"] = self.dataset
         return result
 
 
 class LinksField(serializers.HyperlinkedIdentityField):
     def to_representation(self, value):
-        request = self.context.get('request')
+        request = self.context.get("request")
 
-        result = OrderedDict([
-            ('self', dict(
-                href=self.get_re_path(value, self.view_name, request, None))
-             ),
-        ])
+        result = OrderedDict(
+            [
+                (
+                    "self",
+                    dict(href=self.get_re_path(value, self.view_name, request, None)),
+                ),
+            ]
+        )
 
         return result
 
 
 class HALSerializer(serializers.HyperlinkedModelSerializer):
-    url_field_name = '_links'
+    url_field_name = "_links"
     serializer_url_field = LinksField
 
 
 class HALPagination(pagination.PageNumberPagination):
-    page_size_query_param = 'page_size'
+    page_size_query_param = "page_size"
 
     def get_paginated_response(self, data):
         self_link = self.request.build_absolute_uri()
@@ -53,24 +62,37 @@ class HALPagination(pagination.PageNumberPagination):
             self_link = self_link[:-4]
 
         if self.page.has_next():
-            next_link = replace_query_param(self_link, self.page_query_param, self.page.next_page_number())
+            next_link = replace_query_param(
+                self_link, self.page_query_param, self.page.next_page_number()
+            )
         else:
             next_link = None
 
         if self.page.has_previous():
-            prev_link = replace_query_param(self_link, self.page_query_param, self.page.previous_page_number())
+            prev_link = replace_query_param(
+                self_link, self.page_query_param, self.page.previous_page_number()
+            )
         else:
             prev_link = None
 
-        return response.Response(OrderedDict([
-            ('_links', OrderedDict([
-                ('self', dict(href=self_link)),
-                ('next', dict(href=next_link)),
-                ('previous', dict(href=prev_link)),
-            ])),
-            ('count', self.page.paginator.count),
-            ('results', data)
-        ]))
+        return response.Response(
+            OrderedDict(
+                [
+                    (
+                        "_links",
+                        OrderedDict(
+                            [
+                                ("self", dict(href=self_link)),
+                                ("next", dict(href=next_link)),
+                                ("previous", dict(href=prev_link)),
+                            ]
+                        ),
+                    ),
+                    ("count", self.page.paginator.count),
+                    ("results", data),
+                ]
+            )
+        )
 
 
 class AtlasViewSet(DetailSerializerMixin, viewsets.ReadOnlyModelViewSet):
@@ -85,7 +107,7 @@ class RelatedSummaryField(serializers.Field):
         count = value.count()
         model_name = value.model.__name__
         mapping = model_name.lower() + "-list"
-        url = reverse(mapping, request=self.context['request'])
+        url = reverse(mapping, request=self.context["request"])
 
         parent_pk = value.instance.pk
         filter_name = list(value.core_filters.keys())[0]
@@ -99,8 +121,8 @@ class RelatedSummaryField(serializers.Field):
 class DisplayField(serializers.Field):
 
     def __init__(self, *args, **kwargs):
-        kwargs['source'] = '*'
-        kwargs['read_only'] = True
+        kwargs["source"] = "*"
+        kwargs["read_only"] = True
         super().__init__(*args, **kwargs)
 
     def to_representation(self, value):

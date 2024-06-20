@@ -22,9 +22,12 @@ def process_wkt(path, filename, callback):
     """
     source = os.path.join(path, filename)
     with open(source) as f:
-        rows = csv.reader(f, delimiter='|')
+        rows = csv.reader(f, delimiter="|")
         return [
-            result for result in (callback(row[0], GEOSGeometry(row[1])) for row in rows) if result]
+            result
+            for result in (callback(row[0], GEOSGeometry(row[1])) for row in rows)
+            if result
+        ]
 
 
 def process_shp(path, filename, callback, max_count=0):
@@ -37,7 +40,7 @@ def process_shp(path, filename, callback, max_count=0):
     :return:
     """
     source = os.path.join(path, filename)
-    ds = DataSource(source, encoding='ISO-8859-1')
+    ds = DataSource(source, encoding="ISO-8859-1")
     layer = ds[0]
 
     def generate_points():

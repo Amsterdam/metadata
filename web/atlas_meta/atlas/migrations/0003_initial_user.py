@@ -6,11 +6,11 @@ from django.db import migrations
 
 
 def create_initial_data(apps, schema_editor):
-    user_model = apps.get_model('auth', 'user')
+    user_model = apps.get_model("auth", "user")
 
     user = user_model(
-        username='test@test.com',
-        password='atlas123',
+        username="test@test.com",
+        password="atlas123",
         is_active=True,
         is_superuser=True,
         is_staff=True,
@@ -22,7 +22,7 @@ def create_initial_data(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('atlas', '0002_initial_data'),
+        ("atlas", "0002_initial_data"),
     ]
 
     operations = [

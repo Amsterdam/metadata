@@ -6,8 +6,7 @@ import atlas.urls
 
 
 urlpatterns = [
-    path('', include(atlas.urls.router.urls)),
-
-    re_path(r'^metadata-admin/', admin.site.urls),
-    path('status/', include('datapunt_generic.health.urls', namespace='health')),
+    path("", include(atlas.urls.router.urls)),
+    re_path(r"^metadata-admin/", admin.site.urls),
+    path("status/", include("datapunt_generic.health.urls", namespace="health")),
 ]

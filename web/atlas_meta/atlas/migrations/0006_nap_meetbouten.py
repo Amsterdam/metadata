@@ -1,36 +1,36 @@
-'''
+"""
 Created on 9 Jan 2017
 
 @author: evert
-'''
+"""
 
 from django.db import migrations, IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 
 NEW_DATA = (
     {
-        'id': 'nap',
-        'title': 'NAP',
-        'group': 'NAP',
-        'update_frequency': 'op verzoek',
-        'data_modified_date': 'op verzoek',
+        "id": "nap",
+        "title": "NAP",
+        "group": "NAP",
+        "update_frequency": "op verzoek",
+        "data_modified_date": "op verzoek",
     },
     {
-        'id': 'meetbouten',
-        'title': 'Meetbouten',
-        'group': 'NAP',
-        'update_frequency': 'op verzoek',
-        'data_modified_date': 'op verzoek',
+        "id": "meetbouten",
+        "title": "Meetbouten",
+        "group": "NAP",
+        "update_frequency": "op verzoek",
+        "data_modified_date": "op verzoek",
     },
 )
 
 
 def update_nap_meetbouten(apps, schema_editor):
-    Migrations = apps.get_model('atlas', 'metadata')
+    Migrations = apps.get_model("atlas", "metadata")
 
     # Delete nap-meetbouten, if it exists
     try:
-        nap_meetbouten = Migrations.objects.get(pk='nap-meetbouten')
+        nap_meetbouten = Migrations.objects.get(pk="nap-meetbouten")
     except ObjectDoesNotExist:
         pass  # this row doesn't exist
     else:
@@ -47,7 +47,7 @@ def update_nap_meetbouten(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('atlas', '0005_auto_20160407_1213'),
+        ("atlas", "0005_auto_20160407_1213"),
     ]
 
     operations = [

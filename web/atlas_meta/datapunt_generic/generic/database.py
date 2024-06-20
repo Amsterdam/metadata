@@ -12,8 +12,7 @@ def clear_models(*models):
     """
     for model in models:
         # noinspection PyProtectedMember
-        connection.cursor().execute(
-            "TRUNCATE {} CASCADE".format(model._meta.db_table))
+        connection.cursor().execute("TRUNCATE {} CASCADE".format(model._meta.db_table))
 
 
 def get_docker_host():
@@ -27,10 +26,10 @@ def get_docker_host():
 
     export
     """
-    d_host = os.getenv('DOCKER_HOST', None)
+    d_host = os.getenv("DOCKER_HOST", None)
     if d_host:
-        if re.match(r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$', d_host):
+        if re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$", d_host):
             return d_host
 
-        return re.match(r'tcp://(.*?):\d+', d_host).group(1)
-    return 'localhost'
+        return re.match(r"tcp://(.*?):\d+", d_host).group(1)
+    return "localhost"

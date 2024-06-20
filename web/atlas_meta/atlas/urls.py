@@ -13,12 +13,13 @@ class AtlasRouter(routers.DefaultRouter):
 
 
 router = AtlasRouter()
-router.register(r'metadata', views.MetaDataViewset)
+router.register(r"metadata", views.MetaDataViewset)
 
 urlpatterns = router.urls
 
 if settings.DEBUG:
     import debug_toolbar
+
     urlpatterns += [
-        path('__debug__/', include(debug_toolbar.urls)),
+        path("__debug__/", include(debug_toolbar.urls)),
     ]

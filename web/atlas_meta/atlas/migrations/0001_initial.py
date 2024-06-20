@@ -9,19 +9,18 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='MetaData',
+            name="MetaData",
             fields=[
-                ('id', models.CharField(max_length=255, primary_key=True)),
-                ('title', models.CharField(max_length=100, null=True)),
-                ('group', models.CharField(max_length=100, null=True)),
-                ('update_frequency', models.CharField(max_length=100, null=True)),
-                ('data_modified_date', models.CharField(max_length=100, null=True)),
-                ('last_import_date', models.DateField(null=True)),
+                ("id", models.CharField(max_length=255, primary_key=True)),
+                ("title", models.CharField(max_length=100, null=True)),
+                ("group", models.CharField(max_length=100, null=True)),
+                ("update_frequency", models.CharField(max_length=100, null=True)),
+                ("data_modified_date", models.CharField(max_length=100, null=True)),
+                ("last_import_date", models.DateField(null=True)),
             ],
         ),
     ]

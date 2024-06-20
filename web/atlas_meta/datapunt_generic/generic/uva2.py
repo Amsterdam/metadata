@@ -4,7 +4,7 @@ import logging
 import os
 from contextlib import contextmanager
 
-__author__ = 'yigalduppen'
+__author__ = "yigalduppen"
 
 log = logging.getLogger(__name__)
 
@@ -27,7 +27,7 @@ def uva_indicatie(s):
     """
     Translates an indicatie (J/N) to True/False
     """
-    return {'J': True, 'N': False}.get(s, False)
+    return {"J": True, "N": False}.get(s, False)
 
 
 def uva_geldig(start, eind):
@@ -48,8 +48,8 @@ def _context_reader(source, skip=3, quotechar=None, quoting=csv.QUOTE_NONE):
     if not os.path.exists(source):
         raise ValueError("File not found: {}".format(source))
 
-    with open(source, encoding='cp1252') as f:
-        rows = csv.reader(f, delimiter=';', quotechar=quotechar, quoting=quoting)
+    with open(source, encoding="cp1252") as f:
+        rows = csv.reader(f, delimiter=";", quotechar=quotechar, quoting=quoting)
         for i in range(skip):
             next(rows)
 
@@ -58,31 +58,39 @@ def _context_reader(source, skip=3, quotechar=None, quoting=csv.QUOTE_NONE):
         yield (_wrap_row(r, headers) for r in rows)
 
 
-def resolve_file(path, code, extension='UVA2'):
+def resolve_file(path, code, extension="UVA2"):
     if not code:
         raise ValueError("No code specified")
 
-    prefix = code + '_'
-    matches = [os.path.join(path, f) for f in os.listdir(path) if f.startswith(prefix) and f.endswith(extension)]
+    prefix = code + "_"
+    matches = [
+        os.path.join(path, f)
+        for f in os.listdir(path)
+        if f.startswith(prefix) and f.endswith(extension)
+    ]
     if not matches:
-        raise ValueError("Could not find file starting with {} in {}".format(prefix, path))
+        raise ValueError(
+            "Could not find file starting with {} in {}".format(prefix, path)
+        )
     matches_with_mtime = [(os.path.getmtime(f), f) for f in matches]
     match = sorted(matches_with_mtime)[-1]
     return match[1]
 
 
 def geldig_tijdvak(r):
-    return uva_geldig(r['TijdvakGeldigheid/begindatumTijdvakGeldigheid'],
-                      r['TijdvakGeldigheid/einddatumTijdvakGeldigheid'])
+    return uva_geldig(
+        r["TijdvakGeldigheid/begindatumTijdvakGeldigheid"],
+        r["TijdvakGeldigheid/einddatumTijdvakGeldigheid"],
+    )
 
 
 def geldige_relatie(row, relatie):
-    begin = row['{}/TijdvakRelatie/begindatumRelatie'.format(relatie)]
+    begin = row["{}/TijdvakRelatie/begindatumRelatie".format(relatie)]
 
     try:
-        end = row['{}/TijdvakRelatie/einddatumRelatie'.format(relatie)]
+        end = row["{}/TijdvakRelatie/einddatumRelatie".format(relatie)]
     except KeyError:
-        end = row['{}/TijdvakRelatie/eindatumRelatie'.format(relatie)]  # sic!
+        end = row["{}/TijdvakRelatie/eindatumRelatie".format(relatie)]  # sic!
 
     return uva_geldig(begin, end)
 
@@ -124,18 +132,20 @@ def process_uva2(path, file_code, process_row_callback):
 
 
 def process_csv(path, file_code, process_row_callback):
-    source = resolve_file(path, file_code, extension='csv')
+    source = resolve_file(path, file_code, extension="csv")
     cb = logging_callback(source, process_row_callback)
 
-    with _context_reader(source, skip=0, quotechar='"', quoting=csv.QUOTE_MINIMAL) as rows:
+    with _context_reader(
+        source, skip=0, quotechar='"', quoting=csv.QUOTE_MINIMAL
+    ) as rows:
         return [result for result in (cb(r) for r in rows) if result]
 
 
 def read_landelijk_id_mapping(path, file_code):
-    source = resolve_file(path, file_code, extension='dat')
+    source = resolve_file(path, file_code, extension="dat")
     result = dict()
     with open(source) as f:
-        reader = csv.reader(f, delimiter=';')
+        reader = csv.reader(f, delimiter=";")
         next(reader)  # skip header
         for row in reader:
             if len(row) >= 2:

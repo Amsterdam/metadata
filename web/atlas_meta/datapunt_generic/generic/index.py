@@ -12,9 +12,9 @@ log = logging.getLogger(__name__)
 
 
 class DeleteIndexTask(object):
-    index = ''
+    index = ""
     doc_types = []
-    name = 'remove index'
+    name = "remove index"
 
     def __init__(self):
 
@@ -53,11 +53,14 @@ class ImportIndexTask(object):
         raise NotImplementedError()
 
     def execute(self):
-        client = elasticsearch.Elasticsearch(
-            hosts=settings.ELASTIC_SEARCH_HOSTS)
+        client = elasticsearch.Elasticsearch(hosts=settings.ELASTIC_SEARCH_HOSTS)
         helpers.bulk(
-            client, (self.convert(obj).to_dict(include_meta=True)
-                     for obj in tqdm(self.get_queryset())))
+            client,
+            (
+                self.convert(obj).to_dict(include_meta=True)
+                for obj in tqdm(self.get_queryset())
+            ),
+        )
 
 
 class CopyIndexTask(object):
@@ -70,13 +73,13 @@ class CopyIndexTask(object):
     Especialy userfull when editing/testing analyzers
     and change production environment on the fly
     """
-    index = ''
-    target = ''
-    name = 'copy index elastic'
+
+    index = ""
+    target = ""
+    name = "copy index elastic"
 
     def __init__(self):
-        """
-        """
+        """ """
         if not self.index:
             raise ValueError("No index specified")
 
@@ -87,9 +90,7 @@ class CopyIndexTask(object):
         """
         Reindex elastic index using existing documents
         """
-        client = elasticsearch.Elasticsearch(
-            hosts=settings.ELASTIC_SEARCH_HOSTS)
+        client = elasticsearch.Elasticsearch(hosts=settings.ELASTIC_SEARCH_HOSTS)
 
-        log.debug('Backup index %s to %s ', self.index, self.target)
+        log.debug("Backup index %s to %s ", self.index, self.target)
         helpers.reindex(client, self.index, self.target)
-
