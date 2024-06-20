@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import MetaData
 
 
+@admin.register(MetaData)
 class MetaDataAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'group', 'update_frequency', 'data_modified_date', 'last_import_date']
 
@@ -10,4 +11,3 @@ class MetaDataAdmin(admin.ModelAdmin):
         return MetaData.objects.exclude(title__isnull=True)
 
 
-admin.site.register(MetaData, MetaDataAdmin)

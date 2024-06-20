@@ -1,4 +1,5 @@
-from django.urls import re_path, include
+from django.urls import path
+from django.urls import include
 from rest_framework import routers
 
 import atlas.views as views
@@ -19,5 +20,5 @@ urlpatterns = router.urls
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += [
-        re_path(r'^__debug__/', include(debug_toolbar.urls)),
+        path('__debug__/', include(debug_toolbar.urls)),
     ]
